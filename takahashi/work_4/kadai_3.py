@@ -13,15 +13,13 @@ def main():
     staffOkDay = tmp[1:staffNum+1]
     semistaffOkDay = tmp[staffNum+1::]
 
-    for index, item in enumerate(staffOkDay):
-        staffOkDay[index] =  staffOkDay[index].split("-")
-    if semistaffNum > 0 :   
-       for index, item in enumerate(semistaffOkDay):
-             semistaffOkDay[index] = semistaffOkDay[index].split("-")
-    
+    staffOkDay = [i.split("-") for i in staffOkDay]
 
-    staffOkDay = getOkDayList(staffOkDay)
-    semistaffOkDay = getOkDayList(semistaffOkDay)
+    if semistaffNum > 0 :   
+        semistaffOkDay = [i.split("-") for i in semistaffOkDay]  
+
+    staffOkDay = [i for i2 in staffOkDay for i in i2]
+    semistaffOkDay = [i for i2 in semistaffOkDay for i in i2]
     
     staffOkDayNumList = collections.Counter(staffOkDay)
     semistaffOkDayNumList = collections.Counter(semistaffOkDay)
@@ -32,22 +30,16 @@ def main():
     print(okDay) 
         
 
- # List[item[1,2,3],item[4,5,6]...] to List[k1,2,3,4,5,6...]
-def getOkDayList(staffOkDayList):
-    tmp = []
-    for item in staffOkDayList: 
-        for item2 in item:
-            tmp.append(item2)
-    return tmp
-
 def getOkDaySum(staffOkNumList,semistaffOkNumList):
     if len(semistaffOkNumList) == 0:
         return staffOkNumList
     allStaffOkDayNum = {}
+
+    #allStaffOkDayNum = [i for i in staffOkNumList if i in semistaffOkNumList]
     for key in semistaffOkNumList:
          if key in staffOkNumList:      
             allStaffOkDayNum[key] = semistaffOkNumList[key] + staffOkNumList[key]
-   
+    print(allStaffOkDayNum)
     return allStaffOkDayNum
 
 
@@ -59,7 +51,6 @@ def leaveMaxDay(okDayList):
             break
    
     return okDayList
-
 
 if __name__ == '__main__':
     main()

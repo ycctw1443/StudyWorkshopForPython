@@ -1,27 +1,22 @@
 #!/usr/bin/env python
 # _*_ coding:utf-8 _*_
 import sys
-
+import re
 
 def main():
     inputData = sys.argv
 
+    inputData = [int(data) for data in re.split(",|-",inputData[1])]
+    ribonNum = 0
+    ribonLen = inputData[1]
+    now_len = 0
+    print(inputData)
 
-    a = inputData[1].split(",")
-    b = a[0].split("-")
-    for index, item in enumerate(a):
-        if index != 0:
-            b.append(a[index])
-
-
-    ribonNum = 1
-    ribonLen = int(b[1])
-   
-    for i in range(int(b[0])):
-        if(ribonLen < int(b[i+2])):
+    for customer_len in inputData[2:]:
+        if now_len < customer_len:
             ribonNum += 1
-            ribonLen = int(b[1])
-        ribonLen -= int(b[i+2])
+            now_len = ribonLen
+        now_len -= customer_len
     
     print(ribonNum)
 
