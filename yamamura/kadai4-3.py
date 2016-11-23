@@ -13,7 +13,7 @@ def main():
     alldate = [e for es in item[1:] for e in es]
     counted_dict = Counter(alldate)
 
-    syaindate = [e for es in item[1:num+1] for e in es]
+    syaindate = [e for es in item[1: num+1] for e in es]
 
     max_num = 0
     for date in sorted(syaindate):
