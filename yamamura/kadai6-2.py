@@ -1,19 +1,21 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-import sys
+import codecs
 from collections import Counter
 
 
 def main():
-    args = sys.argv
-    input_str = args[1]
-    item = [x.split("-") for x in input_str.split(",")]
-    num = int(item[0][0])
+    datatxt = codecs.open("./data2.txt","r","utf-8")
+    try:
+        item = [x.strip() for x in datatxt]
+    finally:
+        datatxt.close()
 
-    alldate = [e for es in item[1:] for e in es]
+    syain = int(item[0])
+    syaindate = [e for es in item[1:syain+1] for e in es.split("-")]
+
+    alldate = [e for es in item[1:] for e in es.split("-")]
     counted_dict = Counter(alldate)
-
-    syaindate = [e for es in item[1:num+1] for e in es]
 
     max_num = 0
     for date in sorted(syaindate):
@@ -21,6 +23,7 @@ def main():
             max_num = counted_dict[date]
             party_date = date
     print(party_date, max_num)
+
 
 if __name__ == '__main__':
     main()
