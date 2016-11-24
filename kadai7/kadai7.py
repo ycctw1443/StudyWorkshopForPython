@@ -43,10 +43,7 @@ def main():
     
     print(class1_1.teacher_name)
     print(class1_2.teacher_name)
-<<<<<<< HEAD
-=======
     print("近藤李也")
->>>>>>> mob2
 
     print(yota1)
 def readClassData(grade,class_id):
