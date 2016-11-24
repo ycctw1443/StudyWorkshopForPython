@@ -35,10 +35,7 @@ def main():
     print(class1_1.teacher_name)
     print(class1_2.teacher_name)
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 2deb4a3... 問題１終わり！
 def readClassData(grade,class_id):
     
     file_name = "./" + str(grade) + "-" + str(class_id) + ".csv"
