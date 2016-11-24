@@ -1,26 +1,18 @@
 #!/usr/bin/env python
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 import sys
+
 
 def main():
     args = sys.argv
     list1 = args[1].split(",")
     syain = int(list1[0])
     list1.pop(0)
-    list2 = []
-    i = 0
-    while i < syain:
-        list2 += list1[i].split("-")
-        i += 1
-    list3 = []
-    i = 0
-    while i < int(len(list1)):
-        list3 += list1[i].split("-")
-        i += 1
-    from collections import Counter
-    counted_dict = Counter(list3)
-    from collections import OrderedDict
-    a = OrderedDict(sorted(counted_dict.items(), key=lambda x:x[1], reverse=True))
+    list2 = list1[:syain-1:]
+    list3 = list1[:len(list1)-1:]
+    from collections import Counter,OrderedDict
+    a = OrderedDict(sorted(Counter(list3).items(),
+                    key=lambda x:x[1], reverse=True))
     i = 0
     for item in a.keys():
         m = 0
@@ -34,8 +26,6 @@ def main():
             print(item)
             print(a.get(item,))
             break
-
-
 
 if __name__ == "__main__":
     main()
