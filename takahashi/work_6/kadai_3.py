@@ -43,7 +43,7 @@ def printMostLuckyBox(boxList,boxNameList):
 def printSecondPeopleLuckyProbability(boxList):
     firstSum = sum(item[0] for item in boxList)
     allSum = sum([item for item2 in boxList for item in item2])
-    print(int(round(firstSum/allSum*100,0)))
+    print(int(round(firstSum/allSum*100,0)) )
 
 def mondai3(boxList,boxNum):
     luckyNum = [item[0] for item in boxList]
