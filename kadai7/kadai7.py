@@ -37,6 +37,7 @@ def main():
     print("近藤李也")
 
     print(yota1)
+
 def readClassData(grade,class_id):
     
     file_name = "./" + str(grade) + "-" + str(class_id) + ".csv"
