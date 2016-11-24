@@ -34,6 +34,7 @@ def main():
     
     print(class1_1.teacher_name)
     print(class1_2.teacher_name)
+    print("近藤李也")
 
 def readClassData(grade,class_id):
     
