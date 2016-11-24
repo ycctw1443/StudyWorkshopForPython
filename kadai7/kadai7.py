@@ -35,6 +35,7 @@ def main():
     print(class1_1.teacher_name)
     print(class1_2.teacher_name)
 
+    print(yota1)
 def readClassData(grade,class_id):
     
     file_name = "./" + str(grade) + "-" + str(class_id) + ".csv"
