@@ -35,7 +35,6 @@ def main():
     print(class1_1.teacher_name)
     print(class1_2.teacher_name)
 
-    print("aaa")
 
 def readClassData(grade,class_id):
     
