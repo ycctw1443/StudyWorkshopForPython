@@ -91,6 +91,7 @@ def mondai4(list1,list2):
     print("male math=",name_m[math_m.index(max(math_m))])
     print("male japanese=",name_m[japanese_m.index(max(japanese_m))])
     print("male total=",name_m[total_m.index(max(total_m))])
+    return Classroom(1,1,student_list,tmp[1][1],tmp[1][4])
 
 if __name__ == '__main__':
     main()
