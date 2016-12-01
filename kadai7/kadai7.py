@@ -4,7 +4,6 @@
 import codecs
 import re
 
-
 class Student(object):
 
     def __init__(self,student_id,name,math,japanese,fm):
@@ -24,19 +23,11 @@ class Classroom(object):
         self.teacher_name = teacher_name
         self.teacher_fm = teacher_fm
 
-
 def main():
-   # student = Student()
-   # classroom = Classroom()
-   # print(student, classroom)
+    
     class1_1 = readClassData(1,1)
     class1_2 = readClassData(1,2)
-    
-    print(class1_1.teacher_name)
-    print(class1_2.teacher_name)
-    print("近藤李也")
 
-    print(yota1)
 
 def readClassData(grade,class_id):
     
@@ -58,15 +49,76 @@ def readClassData(grade,class_id):
         student = Student(i[0],i[1],i[2],i[3],i[4])
         student_list.append(student)
 
-    return Classroom(1,1,student_list,tmp[1][1],tmp[1][4])
+    return Classroom(int(grade),int(class_id),student_list,tmp[1][1],tmp[1][4])
 
    
+def sortSumPointOneClass(student_list):
+    list = sorted(student_list,key=lambda x: int(x.japanese + x.math), reverse=True)
+    for student in list:
+        print(student.name , student.japanese,student.math)
 
 
-   # print(tmp)
+def sortSumPointAllClass(student_list_1,student_list_2):
+    list = student_list_1 + student_list_2 
+    list = sorted(list,key=lambda x: int(x.japanese + x.math), reverse=True)
+    for student in list:
+         print(student.name , student.japanese,student.math)
 
 
+def sortSumPointMF(student_list_1,student_list_2):
+    allstudent_list = student_list_1 + student_list_2
+    male_list = [student for student in allstudent_list if student.fm == "M"]  
+    female_list = [student for student in allstudent_list if student.fm == "F"] 
     
+    male_list = sorted(male_list,key=lambda x: int(x.japanese + x.math), reverse=True)
+    female_list = sorted(female_list,key=lambda x: int(x.japanese + x.math), reverse=True)
+   
+    for student in male_list:
+        print(student.name, student.japanese, student.math, student.fm)
+    for student in female_list:
+        print(student.name, student.japanese, student.math, student.fm)
+    
+
+def mondai2(student_list,grade,class_id):
+    name = [i.name for i in student_list]
+    math = [int(i.math) for i in student_list]
+    japanese = [int(i.math) for i in student_list]
+    total = [int(i.math)+int(i.japanese) for i in student_list]
+    print("class:",grade,"-",class_id)
+    print("math=",name[math.index(max(math))],
+          ",japanese=",name[japanese.index(max(japanese))],
+          ",total=",name[total.index(max(total))])
+
+def mondai3(list1,list2):
+    all_list = list1 + list2
+    name = [i.name for i in all_list]
+    math = [int(i.math) for i in all_list]
+    japanese = [int(i.japanese) for i in all_list]
+    total = [int(i.math)+int(i.japanese) for i in all_list]
+    print("all classes on grade 1")
+    print("math=",name[math.index(max(math))])
+    print("japanese=",name[japanese.index(max(japanese))])
+    print("total=",name[total.index(max(total))])
+    return all_list
+
+def mondai4(list1,list2):
+    all_list = mondai3(list1,list2)
+    name_f = [i.name for i in all_list if i.fm == "F"]
+    name_m = [i.name for i in all_list if i.fm == "M"]                         
+    math_f = [int(i.math) for i in all_list if i.fm == "F"] 
+    math_m = [int(i.math) for i in all_list if i.fm == "M"]
+    japanese_f = [int(i.japanese) for i in all_list if i.fm == "F"]
+    japanese_m = [int(i.japanese) for i in all_list if i.fm == "M"]
+    total_f = [int(i.math)+int(i.japanese) for i in all_list if i.fm == "F"]
+    total_m = [int(i.math)+int(i.japanese) for i in all_list if i.fm == "M"]
+    print("by f/m")
+    print("female math=",name_f[math_f.index(max(math_f))])
+    print("female japanese=",name_f[japanese_f.index(max(japanese_f))])
+    print("female total=",name_f[total_f.index(max(total_f))])
+    print("male math=",name_m[math_m.index(max(math_m))])
+    print("male japanese=",name_m[japanese_m.index(max(japanese_m))])
+    print("male total=",name_m[total_m.index(max(total_m))])
+
 
 if __name__ == '__main__':
     main()
