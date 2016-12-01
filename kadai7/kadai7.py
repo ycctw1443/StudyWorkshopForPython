@@ -14,15 +14,6 @@ class Student(object):
         self.japanese = japanese
         self.fm = fm
 
-class Student(object):
-
-    def __init__(self):
-        self.student_id = None
-        self.name = None
-        self.math = None
-        self.japanese = None
-        self.fm = None
-
 
 class Classroom(object):
 
@@ -35,17 +26,11 @@ class Classroom(object):
 
 
 def main():
-   # student = Student()
-   # classroom = Classroom()
-   # print(student, classroom)
+    
     class1_1 = readClassData(1,1)
     class1_2 = readClassData(1,2)
     
-    print(class1_1.teacher_name)
-    print(class1_2.teacher_name)
-    print("近藤李也")
 
-    print(yota1)
 def readClassData(grade,class_id):
     
     file_name = "./" + str(grade) + "-" + str(class_id) + ".csv"
@@ -66,31 +51,36 @@ def readClassData(grade,class_id):
         student = Student(i[0],i[1],i[2],i[3],i[4])
         student_list.append(student)
 
-    return Classroom(1,1,student_list,tmp[1][1],tmp[1][4])
+    return Classroom(int(grade),int(class_id),student_list,tmp[1][1],tmp[1][4])
 
    
+def sortSumPointOneClass(student_list):
+    list = sorted(student_list,key=lambda x: int(x.japanese + x.math), reverse=True)
+    for student in list:
+        print(student.name , student.japanese,student.math)
 
 
-   # print(tmp)
+def sortSumPointAllClass(student_list_1,student_list_2):
+    list = student_list_1 + student_list_2 
+    list = sorted(list,key=lambda x: int(x.japanese + x.math), reverse=True)
+    for student in list:
+         print(student.name , student.japanese,student.math)
 
 
+def sortSumPointMF(student_list_1,student_list_2):
+    allstudent_list = student_list_1 + student_list_2
+    male_list = [student for student in allstudent_list if student.fm == "M"]  
+    female_list = [student for student in allstudent_list if student.fm == "F"] 
+    
+    male_list = sorted(male_list,key=lambda x: int(x.japanese + x.math), reverse=True)
+    female_list = sorted(female_list,key=lambda x: int(x.japanese + x.math), reverse=True)
+   
+    for student in male_list:
+        print(student.name, student.japanese, student.math, student.fm)
+    for student in female_list:
+        print(student.name, student.japanese, student.math, student.fm)
     
 
-if __name__ == '__main__':
-
-    tmp = []
-    def __init__(self):
-        self.grade = None
-        self.class_id = None
-        self.student_list = None
-        self.teacher_name = None
-        self.teacher_fm = None
-
-
-def main():
-    student = Student()
-    classroom = Classroom()
-    print(student, classroom)
 
 if __name__ == '__main__':
     main()
