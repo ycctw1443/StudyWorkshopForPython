@@ -3,6 +3,7 @@
 
 import codecs
 import re
+import math
 
 class Student(object):
 
@@ -27,7 +28,8 @@ def main():
     
     class1_1 = readClassData(1,1)
     class1_2 = readClassData(1,2)
-
+    
+    ave_var_sta(class1_1.student_list,class1_2.student_list)
 
 def readClassData(grade,class_id):
     
@@ -78,6 +80,131 @@ def sortSumPointMF(student_list_1,student_list_2):
     for student in female_list:
         print(student.name, student.japanese, student.math, student.fm)
     
+def ave_var_sta(student_list1, student_list2):
+
+    student1_1_len = len(student_list1)
+    student1_2_len = len(student_list2)
+
+    student1_1_math = [int(student.math) for student in student_list1]
+    student1_1_math_male = [int(student.math) for student in student_list1 if student.fm == "M"]
+    student1_1_math_female = [int(student.math) for student in student_list1 if student.fm == "F"]
+    student1_1_japanese = [int(student.japanese) for student in student_list1]
+    student1_1_japanese_male = [int(student.japanese) for student in student_list1 if student.fm == "M"]
+    student1_1_japanese_female = [int(student.japanese) for student in student_list1 if student.fm == "F"]
+    student1_2_math = [int(student.math) for student in student_list2]
+    student1_2_math_male = [int(student.math) for student in student_list2 if student.fm == "M"]
+    student1_2_math_female = [int(student.math) for student in student_list2 if student.fm == "F"]
+    student1_2_japanese = [int(student.japanese) for student in student_list2]
+    student1_2_japanese_male = [int(student.japanese) for student in student_list2 if student.fm == "M"]
+    student1_2_japanese_female = [int(student.japanese) for student in student_list2 if student.fm == "F"]
+
+    student1_1_male_len = len(student1_1_math_male)
+    student1_1_female_len = len(student1_1_math_female)
+    student1_2_male_len = len(student1_2_math_male)
+    student1_2_female_len = len(student1_2_math_female)
+
+    student1_1_math_sum = sum(student1_1_math)
+    student1_1_math_male_sum = sum(student1_1_math_male)
+    student1_1_math_female_sum = sum(student1_1_math_female)
+    student1_1_japanese_sum = sum(student1_1_japanese)
+    student1_1_japanese_male_sum = sum(student1_1_japanese_male)
+    student1_1_japanese_female_sum = sum(student1_1_japanese_female)
+    student1_2_math_sum = sum(student1_2_math)
+    student1_2_math_male_sum = sum(student1_2_math_male)
+    student1_2_math_female_sum = sum(student1_2_math_female)
+    student1_2_japanese_sum = sum(student1_2_japanese)
+    student1_2_japanese_male_sum = sum(student1_2_japanese_male)
+    student1_2_japanese_female_sum = sum(student1_2_japanese_female)
+
+    student1_1_sum = student1_1_math_sum + student1_1_japanese_sum
+    student1_1_male_sum = student1_1_math_male_sum + student1_1_japanese_male_sum
+    student1_1_female_sum = student1_1_math_female_sum + student1_1_japanese_female_sum
+    student1_2_sum = student1_2_math_sum + student1_2_japanese_sum
+    student1_2_male_sum = student1_2_math_male_sum + student1_2_japanese_male_sum
+    student1_2_female_sum = student1_2_math_female_sum + student1_2_japanese_female_sum
+    allstudent_sum = student1_1_sum + student1_2_sum
+
+    student1_1_ave = student1_1_sum / (student1_1_len * 2)
+    student1_1_male_ave = student1_1_male_sum / (student1_1_male_len * 2)
+    student1_1_female_ave = student1_1_female_sum / (student1_1_female_len * 2)
+    student1_2_ave = student1_2_sum / (student1_2_len * 2)
+    student1_2_male_ave = student1_2_male_sum / (student1_2_male_len * 2)
+    student1_2_female_ave = student1_2_female_sum / (student1_2_female_len * 2)
+    allstudent_ave = (student1_1_ave + student1_2_ave) / 2
+    allstudent_male_ave = (student1_1_male_ave + student1_2_male_ave) / 2
+    allstudent_female_ave = (student1_1_female_ave + student1_2_female_ave) / 2
+    print(student1_1_ave,student1_2_ave,allstudent_ave,allstudent_male_ave,allstudent_female_ave)
+
+    allsum = 0
+    sum1_1 = 0
+    for m in student1_1_math:
+        m = (m - student1_1_ave) ** 2
+        sum1_1 += m
+        allsum += m
+    for j in student1_1_japanese:
+        j = (j - student1_1_ave) ** 2
+        sum1_1 += j
+        allsum += j
+    student1_1_var = sum1_1 / (student1_1_len * 2)
+    print(student1_1_var)
+    student1_1_sta = math.sqrt(student1_1_var)
+    print(student1_1_sta)
+
+    sum1_2 = 0
+    for m in student1_2_math:
+        m = (m - student1_2_ave) ** 2
+        sum1_2 += m
+        allsum += m
+    for j in student1_2_japanese:
+        j = (j - student1_2_ave) ** 2
+        sum1_2 += j
+        allsum += j
+    student1_2_var = sum1_2 / (student1_2_len * 2)
+    print(student1_2_var)
+    student1_2_sta = math.sqrt(student1_2_var)
+    print(student1_2_sta)
+
+    allstudent_var = allsum / ((student1_1_len + student1_2_len) * 2)
+    print(allstudent_var)
+    allstudent_sta = math.sqrt(allstudent_var)
+    print(allstudent_sta)
+
+    sum_male = 0
+    for m in student1_1_math_male:
+        m = (m - allstudent_male_ave) ** 2
+        sum_male += m
+    for j in student1_1_japanese_male:
+        j = (j - allstudent_male_ave) ** 2
+        sum_male += j
+    for m in student1_2_math_male:
+        m = (m - allstudent_male_ave) ** 2
+        sum_male += m
+    for j in student1_2_japanese_male:
+        j = (j - allstudent_male_ave) ** 2
+        sum_male += j
+    allstudent_male_var = sum_male / ((student1_1_male_len + student1_2_male_len) * 2)
+    print(allstudent_male_var)
+    allstudent_male_sta = math.sqrt(allstudent_male_var)
+    print(allstudent_male_sta)
+
+    sum_female = 0
+    for m in student1_1_math_female:
+        m = (m - allstudent_female_ave) ** 2
+        sum_female += m
+    for j in student1_1_japanese_female:
+        j = (j - allstudent_female_ave) ** 2
+        sum_female += j
+    for m in student1_2_math_female:
+        m = (m - allstudent_female_ave) ** 2
+        sum_female += m
+    for j in student1_2_japanese_female:
+        j = (j - allstudent_female_ave) ** 2
+        sum_female += j
+    allstudent_female_var = sum_female / ((student1_1_female_len + student1_2_female_len) * 2)
+    print(allstudent_female_var)
+    allstudent_female_sta = math.sqrt(allstudent_female_var)
+    print(allstudent_female_sta)
+
 
 def mondai2(student_list,grade,class_id):
     name = [i.name for i in student_list]
