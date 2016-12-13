@@ -29,7 +29,7 @@ def main():
     class1_1 = readClassData(1,1)
     class1_2 = readClassData(1,2)
     
-    ave_var_sta(class1_1.student_list,class1_2.student_list)
+    readTeacherData("mio")
 
 def readClassData(grade,class_id):
     
@@ -52,6 +52,25 @@ def readClassData(grade,class_id):
         student_list.append(student)
 
     return Classroom(int(grade),int(class_id),student_list,tmp[1][1],tmp[1][4])
+
+def readTeacherData(name):
+
+    file_name = "./" + str(name) + ".txt"
+    tmp = []
+    text_data = codecs.open(file_name,"r","utf-8")
+    try:
+        for l in text_data:
+            l = l.strip()
+            tmp.append(l)
+    except: 
+        print("FILE_READ_ERROR")
+    finally:
+        text_data.close()
+    
+    tmp = tmp[1::2]
+
+
+    print(tmp)
 
    
 def sortSumPointOneClass(student_list):
