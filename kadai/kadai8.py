@@ -40,7 +40,7 @@ class Classroom(object):
 
 class Teacher(object):
 
-    def __init__(self,name,grade,class_id,subject,mail,extension_num,phone_num,profile,url):
+    def __init__(self,name,grade,class_id,subject,mail,extension_num,phone_num,profile,url,textdata):
         self.name = name
         self.grade = grade 
         self.class_id = class_id
@@ -50,6 +50,7 @@ class Teacher(object):
         self.phone_num = phone_num
         self.profile = profile
         self.url = url
+        self.textdata = textdata
 
     def printTeacherData(self):
         print("名前:",self.name)
@@ -100,8 +101,8 @@ def main():
     print("\n")
     #class1_1.teacher.analyzeProfile()
     #class1_2.teacher.analyzeProfile()
-
-    extractionWodsParts()
+    
+    extractionWodsParts(class1_1.teacher.textdata)
 
 def readClassData(grade,class_id):
     
@@ -143,6 +144,8 @@ def readTeacherData(name):
     finally:
         text_data.close()
     
+    textdata = ""
+    textdata = textdata.join(tmp)
     tmp = tmp[1::2]
     mail_pattern = re.compile(r"[A-Za-z0-9\-\.\_]+@[A-Za-z0-9\-\_]+\.[A-Za-z0-9\-\.\_]+")
     tmp[3] = mail_pattern.findall(tmp[3])
@@ -158,7 +161,7 @@ def readTeacherData(name):
     url_pattern =  re.compile(r"https?://[A-Za-z0-9/:%#\$&\?\(\)~\.=\+\-]+")
     tmp[6] = url_pattern.findall(tmp[6])
     
-    return Teacher(tmp[0],grade,class_id,tmp[2],tmp[3],extention_num,phone_num[0],tmp[5],tmp[6])
+    return Teacher(tmp[0],grade,class_id,tmp[2],tmp[3],extention_num,phone_num[0],tmp[5],tmp[6],textdata)
 
 
 def compareAvgScore(classroom1, classroom2):
@@ -184,14 +187,16 @@ def compareMaxScore(classroom1,classroom2):
     print("最高点は",winclass.teacher.name,"の勝ちです")
 
 
-def extractionWodsParts():
-    mecab = MeCab.Tagger()
+def extractionWodsParts(text):
+    mecab = MeCab.Tagger("-Ochasen")
     extractionDic = {}
-    node = mecab.parseToNode("私はペンです")
+    mecab.parse("")
+    node = mecab.parseToNode(text)
     while(node):
         data = node.feature.split(",")
-        if(data[0] == "名詞"):
-            extractionDic[node.surface] = extractionDic.get(node.surface, 0) + 1
+        if(data[0] != "名詞") & (data[0] != "動詞"):
+
+           extractionDic[node.surface] = extractionDic.get(node.surface, 0) + 1
         node = node.next
 
     print(extractionDic)
