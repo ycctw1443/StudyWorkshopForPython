@@ -24,6 +24,7 @@ class Classroom(object):
         self.teacher_name = teacher_name
         self.teacher_fm = teacher_fm
 
+
 class Teacher(object):
 
     def __init__(self,name,grade,class_id,subject,mail,extension_num,phone_num,profile,url):
@@ -37,12 +38,64 @@ class Teacher(object):
         self.profile = profile
         self.url = url
 
+<<<<<<< HEAD
+=======
+    def printTeacherData(self):
+        print("名前:",self.name)
+        print("担任の学年:",self.grade)
+        print("担任のクラス:",self.class_id)
+        print("担当教科:",self.subject)
+
+    def printMailAddress(self):
+        print("メールアドレス:",self.mail[0])
+        if(len(self.mail) >= 2):
+             print("個人用メールアドレス",self.mail[1])
+
+    def printUrl(self):
+        print("URL1:",self.url[0])
+        if(len(self.url) >= 2):
+            print("URL2:",self.url[1])
+
+    def printPhoneNum(self):
+        print("電話場号:",self.phone_num)
+
+    def analyzeProfile(self):
+        mecab = MeCab.Tagger("-Ochasen")
+        print(mecab.parse(self.profile))
+
+
+>>>>>>> 946c3ff... 課題９終わらず
 def main():
     
     class1_1 = readClassData(1,1)
     class1_2 = readClassData(1,2)
 
+<<<<<<< HEAD
     teacher_mio  = readTeacherData("mio")
+=======
+    compareAvgScore(class1_1,class1_2)
+    compareMaxScore(class1_1,class1_2)
+   
+    print("\n")
+
+    class1_1.teacher.printTeacherData()
+    class1_1.teacher.printMailAddress()
+    class1_1.teacher.printPhoneNum()
+    class1_1.teacher.printUrl()
+   
+    print("\n")
+   
+    class1_2.teacher.printTeacherData()
+    class1_2.teacher.printMailAddress()
+    class1_2.teacher.printPhoneNum()
+    class1_2.teacher.printUrl()
+
+    print("\n")
+    #class1_1.teacher.analyzeProfile()
+    #class1_2.teacher.analyzeProfile()
+
+    extractionWodsParts()
+>>>>>>> 946c3ff... 課題９終わらず
 
 def readClassData(grade,class_id):
     
@@ -113,6 +166,7 @@ def sortSumPointAllClass(student_list_1,student_list_2):
     for student in list:
          print(student.name , student.japanese,student.math)
 
+<<<<<<< HEAD
 
 def sortSumPointMF(student_list_1,student_list_2):
     allstudent_list = student_list_1 + student_list_2
@@ -295,7 +349,30 @@ def mondai4(list1,list2):
 
 
 #--------課題8------------#
+=======
+def compareMaxScore(classroom1,classroom2):
+    if(classroom1.getMaxPoint() > classroom2.getMaxPoint()):
+        winclass = classroom1
+    elif (classroom1.getMaxPoint() < classroom2.getMaxPoint()):
+        winclass = classroom2
+    else: 
+        print("最高得点は同じです")
+        return
+    print("最高点は",winclass.teacher.name,"の勝ちです")
+>>>>>>> 946c3ff... 課題９終わらず
 
+
+def extractionWodsParts():
+    mecab = MeCab.Tagger()
+    extractionDic = {}
+    node = mecab.parseToNode("私はペンです")
+    while(node):
+        data = node.feature.split(",")
+        if(data[0] == "名詞"):
+            extractionDic[node.surface] = extractionDic.get(node.surface, 0) + 1
+        node = node.next
+
+    print(extractionDic)
 
 if __name__ == '__main__':
     main()
