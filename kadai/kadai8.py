@@ -37,6 +37,7 @@ class Classroom(object):
         sum_point_list =  [int(student.math) + int(student.japanese) for student in self.student_list]
         return max(sum_point_list)
 
+
 class Teacher(object):
 
     def __init__(self,name,grade,class_id,subject,mail,extension_num,phone_num,profile,url):
@@ -69,6 +70,11 @@ class Teacher(object):
     def printPhoneNum(self):
         print("電話場号:",self.phone_num)
 
+    def analyzeProfile(self):
+        mecab = MeCab.Tagger("-Ochasen")
+        print(mecab.parse(self.profile))
+
+
 def main():
     
     class1_1 = readClassData(1,1)
@@ -91,6 +97,11 @@ def main():
     class1_2.teacher.printPhoneNum()
     class1_2.teacher.printUrl()
 
+    print("\n")
+    #class1_1.teacher.analyzeProfile()
+    #class1_2.teacher.analyzeProfile()
+
+    extractionWodsParts()
 
 def readClassData(grade,class_id):
     
@@ -169,10 +180,21 @@ def compareMaxScore(classroom1,classroom2):
         winclass = classroom2
     else: 
         print("最高得点は同じです")
-        return 
-
+        return
     print("最高点は",winclass.teacher.name,"の勝ちです")
 
+
+def extractionWodsParts():
+    mecab = MeCab.Tagger()
+    extractionDic = {}
+    node = mecab.parseToNode("私はペンです")
+    while(node):
+        data = node.feature.split(",")
+        if(data[0] == "名詞"):
+            extractionDic[node.surface] = extractionDic.get(node.surface, 0) + 1
+        node = node.next
+
+    print(extractionDic)
 
 if __name__ == '__main__':
     main()
